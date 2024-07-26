@@ -1,0 +1,66 @@
+create database practice2;
+use practice2;
+create table orders(ord_no int primary key, purch_amt double,ord_date varchar(10),customer_id int,salesman_id int);
+insert into orders values(70001,150.5,'2012-10-05',3005,5002);
+insert into orders values(70009,270.65,'2012-09-10',3001,5005);
+insert into orders values(70002,65.26,'2012-10-05',3002,5001);
+insert into orders values(70004,110.5,'2012-08-17',3009,5003);
+insert into orders values(70007,948.5,'2012-09-10',3005,5002);
+insert into orders values(70005,2400.6,'2012-07-27',3007,500);
+insert into orders values(70008,5760,'2012-09-10',3002,5001);
+insert into orders values(70010,1983.43,'2012-10-10',3004,5006);
+insert into orders values(70003,2480.4,'2012-10-10',3009,5003);
+insert into orders values(70012,250.45,'2012-06-27',3008,5002);
+insert into orders values(70011,75.29,'2012-08-17',3003,5007);
+insert into orders values(70013,3045.6,'2012-04-25',3002,5001);
+update orders set salesman_id=5001 where ord_no=70005;
+
+select sum(purch_amt) as total from orders;
+
+select avg(purch_amt) as total from orders;
+
+select count(distinct salesman_id) from orders ;
+
+select max(purch_amt) from orders;
+
+select min(purch_amt) from orders;
+
+select max(purch_amt),customer_id from orders group by customer_id ;
+
+select max(purch_amt),ord_date from orders group by ord_date;
+
+select max(purch_amt),salesman_id from orders where ord_date='2012-08-17' group by salesman_id;
+
+select max(purch_amt),ord_date,customer_id from orders where ord_date='2012-08-17' group by customer_id order by max(purch_amt);
+
+select max(purch_amt),customer_id,ord_date from orders where (purch_amt between 2000 and 6000)  group by customer_id,ord_date;
+
+select max(purch_amt),customer_id,ord_date from orders where (purch_amt) in(2000,3000,5760,6000) group by customer_id,ord_date;
+
+select max(purch_amt),customer_id from orders where (customer_id between 3002 and 3007)  group by customer_id;
+
+select max(purch_amt),customer_id from orders where (customer_id between 3002 and 3007) and (purch_amt)>1000 group by customer_id;
+
+select max(purch_amt),salesman_id from orders where (salesman_id between 5003 and 5008) group by salesman_id;
+
+select count(*) from orders where ord_date='2012-08-17';
+
+select count(ord_no),salesman_id,ord_date from orders group by ord_date,salesman_id;
+
+select ord_date,salesman_id,ord_no,purch_amt from orders;
+
+select distinct salesman_id from orders;
+
+select ord_no,ord_date,purch_amt from orders where salesman_id=5001;
+
+select * from orders order by ord_date;
+
+select * from orders order by ord_date desc; 
+
+select * from orders order by ord_date,purch_amt desc;
+
+select salesman_id,ord_date,max(purch_amt) from orders group by ord_date,salesman_id order by salesman_id,ord_date;
+
+select count(*) as orders,purch_amt,customer_id from  orders group by customer_id having purch_amt=(select max(purch_amt) from orders) order by purch_amt desc;
+
+select count(*) as orders,sum(purch_amt),customer_id,ord_date from orders group by customer_id having purch_amt=(select max(purch_amt) from orders) order by purch_amt desc;
